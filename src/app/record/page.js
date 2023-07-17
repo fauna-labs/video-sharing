@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link';
 import styles from './recorder.module.css';
+import Recorder from './Recorder';
 
 export default function Record() {
 
@@ -12,6 +13,7 @@ export default function Record() {
         <div className={styles.mainWrap}>
             <Link href='/'><span className={styles.home}>🏠 Home</span></Link>
             <h1>Record Video</h1>
+            <Recorder onRecordedChunks={handleRecordedVid} />
         </div>
     )
 }
