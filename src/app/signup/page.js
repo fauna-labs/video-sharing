@@ -24,11 +24,12 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     client.query(fql`
-        let user = User.create({ email: ${email} })
-        Credentials.create({ document: user, password: ${password} })
+      Signup(${email}, ${password})
     `)
     .then((response) => {
         console.log('response', response.data)
+        alert('User created successfully!')
+        router.push("/login")
     })
     .catch((error) => {
         console.log('error', error)
