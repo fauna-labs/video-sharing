@@ -2,11 +2,16 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './page.module.css';
+import { Client, fql } from 'fauna';
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  const client = new Client({
+    secret: process.env.NEXT_PUBLIC_FAUNA_KEY
+  });
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -18,7 +23,16 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO - create user in Fauna
+    client.query(fql`
+        let user = User.create({ email: ${email} })
+        Credentials.create({ document: user, password: ${password} })
+    `)
+    .then((response) => {
+        console.log('response', response.data)
+    })
+    .catch((error) => {
+        console.log('error', error)
+    })
   };
 
   const redirectToLogin = (e) => {
