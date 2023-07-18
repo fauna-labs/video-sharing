@@ -2,12 +2,22 @@
 import Link from 'next/link';
 import styles from './recorder.module.css';
 import Recorder from './Recorder';
+import { Client, fql } from "fauna";
 
 export default function Record() {
 
+    const client = new Client({
+        secret: process.env.NEXT_PUBLIC_FAUNA_KEY,
+    });
+
     const handleRecordedVid = async (blob) => {
-        // TODO: Store video metadata in Fauna
-        // TODO: Store video blob in Cloundflare R2 Storage
+        console.log('--->', blob)
+        const newVid = await client.query(fql`
+          Video.create({
+            title: ${new Date().toISOString()}
+          })
+        `)
+        console.log('newVid', newVid)
     }
     return (
         <div className={styles.mainWrap}>
