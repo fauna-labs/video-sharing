@@ -24,8 +24,10 @@ export default function Record() {
     const handleRecordedVid = async (blob) => {
         try {
             const newVid = await client.query(fql`
+                let user = User.byId(${userInfo.id})
                 Video.create({
-                    title: ${new Date().toISOString()}
+                    title: ${new Date().toISOString()},
+                    author: user
                 })
             `)
             console.log('newVid', newVid)
