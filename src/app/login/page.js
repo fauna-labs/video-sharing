@@ -24,7 +24,15 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    client.query(fql`Login(${email}, ${password})`)
+    client.query(fql`
+      let user = User.where(.email == ${email}).first()
+      let cred = Credentials.byDocument(user).login(${password})
+      let result = {
+          user: user,
+          cred: cred 
+      }
+      result 
+    `)
     .then((response) => {
         console.log('response', response.data)
         if (!response.data?.user) {
