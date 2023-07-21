@@ -43,8 +43,17 @@ export default function Record() {
             alert('There was an error uploading your video')
         }
     }
+
+    const logout = () => {
+        window.localStorage.removeItem("video-sharing-app");
+        router.push("/login")
+    }
+
     return (
         <div className={styles.mainWrap}>
+            <div className={styles.buttonWrapper}>
+                <button onClick={logout}>Logout</button>
+            </div>
             <Link href='/'><span className={styles.home}>🏠 Home</span></Link>
             <h1>Record Video</h1>
             <Recorder onRecordedChunks={handleRecordedVid} />
