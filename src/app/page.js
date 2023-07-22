@@ -1,23 +1,22 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import Link from 'next/link';
 import { Client, fql } from "fauna";
 import { useRouter } from 'next/navigation';
+import styles from  './page.module.css';
 
 export default function Home() {
 
   const router = useRouter();
 
-  const client = new Client({
-    secret: process.env.NEXT_PUBLIC_FAUNA_KEY
-  });
+  let userInfo = null;
+  if (typeof window !== 'undefined') {
+    userInfo = JSON.parse(localStorage?.getItem("video-sharing-app"));
+  }
 
-  useEffect(() => {
-    client.query(fql`
-      User.all()
-    `).then((response) => {
-      console.log('response', response.data.data)
-    })
-  }, []);
+  const client = new Client({
+    secret: userInfo ? userInfo.key : process.env.NEXT_PUBLIC_FAUNA_KEY
+  });
 
   const logout = () => {
     window.localStorage.removeItem("video-sharing-app");
@@ -26,11 +25,33 @@ export default function Home() {
 
   return (
     <>    
-      <button onClick={logout}>Logout</button>
-      <div>
-        Hello World
+      <div className={styles.pageContainer}>
+        {userInfo ? (
+          <>
+            <div className={styles.topbar}>
+              <span className={styles.h2}>
+                Hello 👋, {localStorageExists.email}
+              </span>
+              <Link href="/record" className={styles.link}>
+                <span >Record Video</span>
+              </Link>
+
+              <button onClick={logout} className={styles.logout}>log out?</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1 className={styles.h1}>Welcome to VidShare 📹</h1>
+            <p>Please Login or Signup to get started...</p>
+            <Link href="/login">
+              <button className={styles.button}>Login</button>
+            </Link>
+            <Link href="/signup">
+              <button className={styles.button}>Signup</button>
+            </Link>       
+          </>
+        )}
       </div>
     </>
-
   );
 }
