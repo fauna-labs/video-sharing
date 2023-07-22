@@ -1,0 +1,38 @@
+.main {
+    margin: 0 auto;
+    width: 80%;
+    padding: 20px;
+    border: 1px solid darkblue;
+}
+
+.mediaWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttonWrapper button {
+    background-color: #337ab7;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 15px 32px;
+    transition-duration: 0.4s;
+}
+
+.buttonWrapper button:hover {
+    background-color: #0056b3;
+}
