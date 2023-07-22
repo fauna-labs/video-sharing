@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { Client, fql } from "fauna";
 import { useRouter } from 'next/navigation';
@@ -7,10 +8,15 @@ import styles from  './page.module.css';
 export default function Home() {
 
   const router = useRouter();
-  let userInfo = null;
-  if (typeof window !== 'undefined') {
-    userInfo = JSON.parse(localStorage?.getItem("video-sharing-app"));
-  }
+  const [userInfo, setUserInfo] = useState(null);
+  const [isClient, setIsClient] = useState(false);
+
+
+  useEffect(() => {
+    setIsClient(true); // we're on the client, update the state
+    const data = localStorage?.getItem("video-sharing-app");
+    setUserInfo(data ? JSON.parse(data) : null);
+  }, []);
 
   const client = new Client({
     secret: userInfo ? userInfo.key : process.env.NEXT_PUBLIC_FAUNA_KEY
