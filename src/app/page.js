@@ -1,5 +1,4 @@
 'use client'
-import { useEffect } from "react";
 import Link from 'next/link';
 import { Client, fql } from "fauna";
 import { useRouter } from 'next/navigation';
@@ -8,7 +7,6 @@ import styles from  './page.module.css';
 export default function Home() {
 
   const router = useRouter();
-
   let userInfo = null;
   if (typeof window !== 'undefined') {
     userInfo = JSON.parse(localStorage?.getItem("video-sharing-app"));
@@ -30,7 +28,7 @@ export default function Home() {
           <>
             <div className={styles.topbar}>
               <span className={styles.h2}>
-                Hello 👋, {localStorageExists.email}
+                Hello 👋, {userInfo.email}
               </span>
               <Link href="/record" className={styles.link}>
                 <span >Record Video</span>
