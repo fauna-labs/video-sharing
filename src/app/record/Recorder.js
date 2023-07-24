@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useRef } from "react";
-import styles from "./Recorder.module.css";
+import styles from "./recorder.module.css";
 
 const Recorder = ({
   onRecordedChunks,
