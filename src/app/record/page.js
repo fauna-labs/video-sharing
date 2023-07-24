@@ -7,7 +7,12 @@ import { Client, fql } from "fauna";
 import { useEffect } from 'react';
 
 export default function Record() {
-    const userInfo = JSON.parse(localStorage?.getItem("video-sharing-app"));
+    let userInfo;
+
+    if (typeof window !== "undefined") {
+        userInfo = JSON.parse(window.localStorage?.getItem("video-sharing-app"))
+    }
+
     const router = useRouter();
 
     useEffect(() => {

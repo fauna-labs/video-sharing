@@ -18,7 +18,13 @@ import styles from  './page.module.css';
 export default function VideoPage() {
     const router = useRouter();
     const { id } = useParams();
-    const userInfo = JSON.parse(localStorage.getItem("video-sharing-app"));
+    
+    let userInfo;
+
+    if (typeof window !== "undefined") {
+        userInfo = JSON.parse(window.localStorage.getItem("video-sharing-app"));
+    }
+
     const client = new Client({
         secret: userInfo ? userInfo.key : process.env.NEXT_PUBLIC_FAUNA_KEY
     });
@@ -26,6 +32,10 @@ export default function VideoPage() {
     const [video, setVideo] = useState(null);
     const [isOwner, setIsOwner] = useState(false);
     const [email, setEmail] = useState("");
+    
+    useEffect(() => {
+        videoVisibility();
+    }, [id]);
 
     if(!userInfo) {
         return (
@@ -35,10 +45,6 @@ export default function VideoPage() {
             </div>
         )
     }
-
-    useEffect(() => {
-        videoVisibility();
-    }, [id]);
 
     const videoVisibility = () => {
         client.query(fql`

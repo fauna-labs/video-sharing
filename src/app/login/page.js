@@ -69,7 +69,7 @@ export default function Login() {
       </form>
 
       <div className={styles.bottomContainer}>
-        <p className={styles.p}>Don't have an account?</p>
+        <p className={styles.p}>Don&apos;t have an account?</p>
         <button onClick={redirectToSignup} className={styles.buttonSecondary}>Sign Up</button>
       </div>
     </div>
