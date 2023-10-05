@@ -26,7 +26,7 @@ export default function Login() {
     e.preventDefault();
     client.query(fql`
       let user = User.where(.email == ${email}).first()
-      let cred = Credentials.byDocument(user).login(${password})
+      let cred = Credentials.byDocument(user)!.login(${password})
       let result = {
           user: user,
           cred: cred 
@@ -47,7 +47,7 @@ export default function Login() {
         router.push("/")
     })
     .catch((error) => {
-        console.log('error', error)
+        console.log('error ===>', error)
         setInvalidPassword(true)
     })
   };
